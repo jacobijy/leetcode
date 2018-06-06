@@ -44,48 +44,26 @@
  * @return {number}
  */
 var numDecodings = function (s) {
-    return devidedNumsEx(s).length;
-};
-
-var devidedNumsEx = function (s) {
-    let result = [];
-    const nums = [...s].map(value => (parseInt(value)));
-    let index = 0;
-    let a = nums[index];
-    while (a !== undefined) {
-        let new_result = [];
-        if (result.length === 0) {
-            if (a === 0) return [];
-            result.push([a])
-            index ++;
-            a = nums[index]
-            continue;
+    if (s.startsWith('0')) return 0;
+    if (s.length <= 1) return s.length;
+    let cta = 1, ctb = 0, lastChar = s[0];
+    for (let i = 1; i < s.length; i++) {
+        let char = s[i];
+        let a = cta;
+        let b = ctb;
+        if (char !== '0') {
+            cta = a + b;
         }
-        for (let value of result) {
-            let b = value.pop();
-            if (a === 0){
-                if (b%10 >= 3) return [];
-                if (b >= 10) continue;
-                value.push([...value, b*10])
-                new_result.push(value);
-            }
-            else if (b >= 10) {
-                value = [...value, ...[b, a]];
-                new_result.push(value);
-            }
-            else {
-                new_result.push([...value, ...[b, a]]);
-                if (b * 10 + a <= 26) {
-                    new_result.push([...value, b * 10 + a])
-                }
-            }
+        else {
+            cta = 0;
         }
-        result = new_result;
-        index ++;
-        a = nums[index]
+        if (parseInt(lastChar + char) <= 26) {
+            ctb = a;
+        } else {
+            ctb = 0;
+        }
+        lastChar = char;
     }
-    return result;
-}
 
-console.log(devidedNumsEx('1001'));
-
+    return cta + ctb
+};
