@@ -82,10 +82,9 @@
 var intToRoman = function (num) {
   let string = '',
     inteToRomanChar = [['I', "V", 'IV', 'IX'], ['X', 'L', 'XL', 'XC'], ['C', 'D', 'CD', 'CM'], ['M']],
-    index = 0;
-  for (const number of numbers(num)) {
-    console.log(number);
-
+    index = 0,
+    nums = numbers(num);
+  for (const number of nums) {
     switch (number) {
       case 9:
         string = inteToRomanChar[index][3] + string;
