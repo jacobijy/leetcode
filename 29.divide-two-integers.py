@@ -12,7 +12,6 @@ MAX = pow(2, 31) - 1
 
 def calcMaxBi(input: int, divisor: int) -> int:
     tmp = divisor
-    result = 0
     count = 0
     while tmp <= input:
         tmp = tmp << 1
@@ -43,9 +42,7 @@ class Solution:
         sign = self.checkSameSign(dividend, divisor)
         dividendEx = abs(dividend)
         divisorEx = abs(divisor)
-        tmp = dividendEx
         result = 0
-        count = 0
         if dividendEx < divisorEx:
             return result
         else:
