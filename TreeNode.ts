@@ -8,18 +8,36 @@ class TreeNode {
         this.right = (right === undefined ? null : right)
     }
 
+    public insert() {
+
+    }
+
+    private static index = 0;
+    private static leftIndex = 0;
     private static create(arr: number[], index) {
-        let node = new TreeNode(arr[index], this.create(arr, ++index), this.create(arr, ++index));
+        if (!arr[this.index]) return null;
+        let node = new TreeNode(arr[this.index], this.create(arr, index), this.create(arr, index+1));
         return node;
     }
 
     static generate(arr: number[]): TreeNode {
-        // let root = new TreeNode(arr[0]);
+        this.index = 0;
         let index = 0;
-        let root;
-        while (arr[index] !== null) {
-            // root = new TreeNode(arr[index], arr[++index], arr[++])
+        let root = new TreeNode(arr[0]);
+        let current = root;
+        while(true) {
+            current.left = new TreeNode(arr[++index]);
+            current.right = new TreeNode(arr[++index]);
+            if (current.left) {
+                current = current.left;
+            }
+            else if (current.right) {
+
+            }
         }
         return root;
     }
 }
+
+let root = TreeNode.generate([5,4,8,11,null,13,4,7,2,null,null,null,1])
+console.log(root.left.left)
