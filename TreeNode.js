@@ -1,4 +1,4 @@
-export class TreeNode {
+class TreeNode {
     val
     left
     right
@@ -6,35 +6,42 @@ export class TreeNode {
         this.val = (val === undefined ? 0 : val)
         this.left = (left === undefined ? null : left)
         this.right = (right === undefined ? null : right)
+        console.log(val);
     }
 
     static index = 0;
 
-    static create(arr, index) {
-        return node;
+    static create(val) {
+        if (val === null) return null;
+        return new TreeNode(val);
     }
 
     static generate(arr) {
-        this.index = 0;
         let index = 0;
         let root = new TreeNode(arr[0]);
-        root.left = new TreeNode(arr[1]);
-        root.right = new TreeNode(arr[2]);
         let current = root;
-        while(true) {
-            let parent = current; // 存储当前节点，后边当前节点会指向其子节点
-            if (data < current.data) { // 如果插入的数据小于当前节点的数据
-                current = current.left; // 当前节点变为其左节点
-                if (current == null) { // 如果当前节点为null 则把插入到当前节点
-                    parent.left = n;
-                    break;
+        let count = 1;
+        let collects = [root]
+        while (true) {
+            let nodesC = count;
+            let arrN = collects;
+            collects = [];
+            count = 0;
+            for (let i = 0; i < nodesC; i++) {
+                current = arrN[i];
+                current.left = TreeNode.create(arr[++index]);
+                current.right = TreeNode.create(arr[++index])
+                if (current.left !== null) {
+                    count++;
+                    collects.push(current.left);
                 }
-            } else {// 如果大于的话插入右节点
-                current = current.right;
-                if (current == null) {
-                    parent.right = n;
-                    break;
+                if (current.right !== null) {
+                    count++;
+                    collects.push(current.right);
                 }
+            }
+            if (arr[index + 1] === undefined) {
+                break;
             }
         }
         return root;
@@ -42,4 +49,28 @@ export class TreeNode {
 }
 
 let root = TreeNode.generate([5,4,8,11,null,13,4,7,2,null,null,null,1])
-console.log(root.left.left)
+console.log(root)
+console.log("test")
+
+
+function hasPathSum1(root, targetSum) {
+    let node = root;
+    const vs = [];
+    function addNode(root, result, list) {
+        let r = result + root.val;
+      if (!root.left && !root.right) {
+          vs.push(r);
+      }
+      if (root.left) {
+          addNode(root.left, r, list)
+      }
+      if (root.right) {
+         addNode(root.right, r, list);
+      }
+    }
+    
+    addNode(node, 0, vs);
+    return vs.indexOf(targetSum) >= 0;
+ };
+
+ hasPathSum1(root, 22);

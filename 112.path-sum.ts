@@ -23,23 +23,23 @@
 // const vs =[];
 
 function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
+   if (root === null) { return false }
    let node = root;
-   let result = node.val;
    const vs = [];
-   function addNode(root, result, list) {
-       let r = result;
-       if (root.left) {
-           addNode(root.left, r, list)
-       }
-       if (root.right) {
-          addNode(root.right, r, list);
-       }
-       if (!root.left && !root.right) {
-          list.push(r);
-       }
+   function addNode(root, result) {
+      let r = result + root.val;
+      if (!root.left && !root.right) {
+          vs.push(r);
+      }
+      if (root.left) {
+          addNode(root.left, r)
+      }
+      if (root.right) {
+         addNode(root.right, r);
+      }
    }
    
-   addNode(node, result, vs);
+   addNode(node, 0);
    return vs.indexOf(targetSum) >= 0;
 };
 // @lc code=end

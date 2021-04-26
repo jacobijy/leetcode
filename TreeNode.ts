@@ -1,4 +1,4 @@
-class TreeNode {
+export class TreeNode {
     val: number
     left: TreeNode | null
     right: TreeNode | null
@@ -8,36 +8,42 @@ class TreeNode {
         this.right = (right === undefined ? null : right)
     }
 
-    public insert() {
-
+    static create(val) {
+        if (val === null) return null;
+        return new TreeNode(val);
     }
 
-    private static index = 0;
-    private static leftIndex = 0;
-    private static create(arr: number[], index) {
-        if (!arr[this.index]) return null;
-        let node = new TreeNode(arr[this.index], this.create(arr, index), this.create(arr, index+1));
-        return node;
-    }
-
-    static generate(arr: number[]): TreeNode {
-        this.index = 0;
+    static generate(arr: number[]) {
         let index = 0;
         let root = new TreeNode(arr[0]);
         let current = root;
-        while(true) {
-            current.left = new TreeNode(arr[++index]);
-            current.right = new TreeNode(arr[++index]);
-            if (current.left) {
-                current = current.left;
+        let count = 1;
+        let collects = [root]
+        while (true) {
+            let nodesC = count;
+            let arrN = collects;
+            collects = [];
+            count = 0;
+            for (let i = 0; i < nodesC; i++) {
+                current = arrN[i];
+                current.left = TreeNode.create(arr[++index]);
+                current.right = TreeNode.create(arr[++index])
+                if (current.left !== null) {
+                    count++;
+                    collects.push(current.left);
+                }
+                if (current.right !== null) {
+                    count++;
+                    collects.push(current.right);
+                }
             }
-            else if (current.right) {
-
+            if (arr[index + 1] === undefined) {
+                break;
             }
         }
         return root;
     }
 }
 
-let root = TreeNode.generate([5,4,8,11,null,13,4,7,2,null,null,null,1])
+let root = TreeNode.generate([5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1])
 console.log(root.left.left)
