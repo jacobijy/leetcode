@@ -12,7 +12,6 @@ MAX = pow(2, 31) - 1
 
 def calcMaxBi(input: int, divisor: int) -> int:
     tmp = divisor
-    result = 0
     count = 0
     while tmp <= input:
         tmp = tmp << 1
@@ -48,16 +47,13 @@ class Solution:
             return result
         else:
             result = calcBinary(dividendEx, divisorEx)
-            if result > MAX:
-                if sign > 0 or result > MAX + 1:
-                    return MAX
-                elif sign < 0:
-                    return sign * result
+            if result <= MIN or result >= MAX:
+                return MAX
             else:
-                return sign * calcBinary(dividendEx, divisorEx)
+                return sign * result
 # @lc code=end
 
 
 s = Solution()
-aa = s.divide(-2147483648, 1)
+aa = s.divide(7, -3)
 print(aa)
